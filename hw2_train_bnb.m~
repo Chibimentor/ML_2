@@ -1,0 +1,33 @@
+function params = hw2_train_bnb(X,Y)
+[rows, columns] = size(X);
+params = struct([]);
+
+A = transpose(full(unique(Y)))
+keySet = A;
+valueSet = zeros(1, length(unique(Y)), 'double');
+prior = containers.Map(keySet, valueSet);
+mean = zeros(max(Y)+abs(min(Y)), columns, 'double');
+
+for i = 1: length(Y)
+    prior(Y(i)) = prior(Y(i))+1;
+end
+for i = 1: rows %X is data Y is labels
+    if sign(Y(i)) 
+    mean(Y(i), :) = double(mean(Y(i),:) + X(i,:));
+end
+
+for i = 1: (max(Y))
+    for j = 1:columns
+        mean(i,j) = (double(mean(i,j))+ 1.0)/((prior(i))+2.0);
+    end
+end
+for i= min(Y):max(Y)
+    prior(i) = prior(i)/length(Y);
+end
+
+for i = 1:max(Y)
+    params(i).prior = prior(i);
+    params(i).mean = mean(i,:);
+end
+
+end

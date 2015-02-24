@@ -1,0 +1,8 @@
+function params = hw2_train_avgperc(X, Y, num_passes)
+weights = zeros(1, columns, 'double');
+u = zeros(1,columns,'double');
+c = 1;
+for i = 1:num_passes
+
+end
+

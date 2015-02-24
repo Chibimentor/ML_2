@@ -1,0 +1,22 @@
+function preds = hw2( X,Y, N)
+
+
+A = [500, 1000, 1500, N];
+preds = struct([]);
+prediction = [];
+ind = 1;
+for k = A
+    sample = datasample([X Y], k, 1);
+    [row, col] = size(sample);
+    data = sample(:, 1:col-1);
+    label = sample(:, col);
+    [rows, columns] = size(test);
+    pred = [];
+    params = hw2_train_bnb(data, ,label);
+    preds(1).preds = hw2_test_bnb(params, test);
+    params = hw2_train_perc(data, label, 1);
+    preds(2).preds = hw2_test_perc(params, 
+    prediction = [prediction pred];
+end
+end
+
