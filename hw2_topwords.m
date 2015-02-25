@@ -15,4 +15,4 @@ vocab = textscan(fileread('news.vocab'),'%s');
 vocab = vocab{1};
 [~,i] = sort(abs(weight_vector), 'descend');
 words = vocab(i(1:num_words));
-weights = weight_vector(i(1:num_words))';
+weights = weight_vector(i(1:num_words))

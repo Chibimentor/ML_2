@@ -1,5 +1,7 @@
 function result = plot_error()
 %newsmat2----------------
+for i = 1:4
+    
 X = [500,1000,1500,3028];
 O1 = [18.54];
 O2 = [15.42];
@@ -62,10 +64,10 @@ AP2 = [13.74];
 AP3 = [11.87];
 AP4 = [10.47];
 
-B1 = [30.47];
-B2 = [26.00];
-B3 = [21.96];
-B4 = [19.06];
+B1 = [30.47, 22.43];
+B2 = [26.00, 22.45];
+B3 = [21.96 , 21.62];
+B4 = [19.06 16.47];
 
 
 O = [mean(O1), mean(O2), mean(O3), mean(O4)];
@@ -74,5 +76,5 @@ OP = [mean(OP1), mean(OP2), mean(OP3), mean(OP4)];
 AP = [mean(AP1), mean(AP2), mean(AP3), mean(AP4)];
 B = [mean(B1), mean(B2), mean(B3), mean(B4)];
 %e = [std(Y1) std(Y2) std(Y3) std(Y4)];
-result1 = plot(X,O,'--r',X,A, '--y',X, OP, '--g',X,AP,'--c',X,B,'--b');
+% result1 = plot(X,O,'--r',X,A, '--y',X, OP, '--g',X,AP,'--c',X,B,'--b');
 end

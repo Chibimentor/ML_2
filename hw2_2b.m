@@ -10,10 +10,13 @@ for k = A
     label = sample(:, col);
     params = hw2_train_bnb(data,label);
     preds(index).bnb = hw2_test_bnb(params, testdata);
+    preds(index).bnb_error = calc_errors(preds(index).bnb, testlabels);
     params = hw2_train_perc(data, label, num_passes);
     preds(index).perc = hw2_test_perc(params, testdata);
+    preds(index).perc_error = calc_errors(preds(index).perc, testlabels);
     params = hw2_train_avgperc(data, label, num_passes);
     preds(index).avgperc = hw2_test_perc(params, testdata);
+    preds(index).avgperc_error = calc_errors(preds(index).avgperc, testlabels);
     index = index + 1;
 end
 end

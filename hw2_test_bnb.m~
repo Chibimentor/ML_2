@@ -1,75 +1,25 @@
 function preds = hw2_test_bnb(params, test)
 preds = [];
-[row, column] = size(params); %1x20
+[row, column] = size(params) %1x20
 [rowt, columnt] = size(test); %7505 * 61188
-disp(size(test)); 
-disp(size(params(1).mean)); %1*784
-%generating conditionals
-class= 0;
-prior = []
-for i = 1:column
-    prior = [prior; params(i).prior];
-end
-
-% mean = []
-% for i = 1:column
-%     mean = [mean; params(i).mean];
-% end
-
-% size(mean) %20 * 61188
-size(prior)%20 * 1
-fun = @(M,T) power(M,T)*power((1-M),(1-T));
-% A = [1,2,3,4,5]
-% B = [6,7,8,9,0]
-% 
-% bsxfun(@(A,B) A+B, A, B)
-class = 0;
-for i = 1:10 %rows of test
+fun = @(M,T) log((M.^T))+log((1-M).^(1-T));
+classes = params(1).class;
+for j = 1:rowt
         max = -Inf;
-    for k = 1:column %iterating through k classes
-        mean = params(k).mean;  
-        sum = 0;
-        for j = 1:rowt
-             sum = sum + log(mean(j)^test(i,j)) + log(1-mean(j)^(1-test(i,j)));
-        end
-        if params(k).prior*sum > max
-            class = i;
-            max = params(k).prior*sum;
+        class = 0;
+    for i = 1:column %iterating through k classes
+        mean = params(i).mean;    
+        prior = params(i).prior;
+        conditional = bsxfun(fun,mean,test(j,:));
+        conditional = sum(conditional);
+        if log(prior)+conditional > max
+            class = classes(i);
+            max = log(prior)+conditional;
         end
     end
     preds = [preds;class];
 end
 
-% for j =1:rowt
-%     for i = 1:column
-%         mean = params(i).mean;
-%         sum = 0;
-%         max = -Inf;
-%         for k = 1:columnt
-%             sum = sum + bsxfun(@power, mean, test(j,k)).*bsxfun(@power, 1-mean, 1 - test(j,k));
-%         end
-%         if sum > max
-%             class = i;
-%         end
-%     end
-%     preds = [preds; class]
-% end
-
-for i = 1:10 %rows of test
-        max = -Inf;
-    for k = 1:column %iterating through k classes
-        mean = params(k).mean;  
-        sum = 0;
-        for j = 1:rowt
-             sum = sum + log(mean(j)^test(i,j)) + log(1-mean(j)^(1-test(i,j)));
-        end
-        if params(k).prior*sum > max
-            class = i;
-            max = params(k).prior*sum;
-        end
-    end
-    preds = [preds;class];
-end
 
 end
 
